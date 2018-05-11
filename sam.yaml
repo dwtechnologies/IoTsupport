@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: IoT Support Buttons
+
+Resources:
+  IoTRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: Allow
+            Principal:
+              Service:
+                - "lambda.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: "LambdaRole"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - "ses:GetIdentityVerificationAttributes"
+                  - "ses:SendEmail"
+                  - "ses:VerifyEmailIdentity"
+                Resource: "*"
+
+
+  IoTSupportButtons:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: IoTSupportButtons
+      Handler: index.handler
+      Description: IoT Support Buttons
+      Role: !GetAtt IoTRole.Arn
+      CodeUri: ./source/iot-support-buttons
+      MemorySize: 128
+      Runtime: nodejs8.10
+      Timeout: 60
+      Environment:
+        Variables:
+          SES_FROM: "noreply@company.com"
+

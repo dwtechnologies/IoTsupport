@@ -1,0 +1,8 @@
+{
+  "IOTBUTTON_SERIAL": {
+    "location": "Stockholm Office",
+    "email": "support@company.com",
+    "emailSubject": "Support request",
+    "teamsWebHook": "https://outlook.office.com/webhook/..."
+  }
+}
