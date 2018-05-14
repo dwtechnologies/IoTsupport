@@ -42,7 +42,7 @@ Resources:
       CodeUri: ./source/iot-support-buttons
       MemorySize: 128
       Runtime: nodejs8.10
-      Timeout: 60
+      Timeout: 20
       Environment:
         Variables:
           SES_FROM: "noreply@company.com"
